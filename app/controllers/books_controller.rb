@@ -28,7 +28,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @book.author = Author.find(params[:author_id])
     if @book.save
-      flash_success { "saved" } # flash[:success] = "#{@book.title} created"
+      flash_success("saved") # flash[:success] = "#{@book.title} created"
       redirect_to root_path
     else
       flash.now[:alert] = @book.errors
@@ -57,10 +57,10 @@ class BooksController < ApplicationController
       flash_does_not_exist   # flash[:alert] = "Book not found"
       redirect_to books_path
     elsif @book.update(book_params)
-      flash_success { "updated" } # flash[:success] = "#{@book.title} updated"
+      flash_success("updated") # flash[:success] = "#{@book.title} updated"
       redirect_to book_path(@book.id)
     else
-      flash_alert { "update" } # flash[:alert] = "Book failed to update"
+      flash_alert("update") # flash[:alert] = "Book failed to update"
       render :edit
     end
   end
@@ -72,7 +72,7 @@ class BooksController < ApplicationController
       if @book
         @book.destroy
       end
-      flash_success { "deleted" } # flash[:success] = "#{@book.title} deleted"
+      flash_success("deleted") # flash[:success] = "#{@book.title} deleted"
     rescue
       flash_does_not_exist # flash[:alert] = "Book does not exist"
     end
@@ -81,12 +81,12 @@ class BooksController < ApplicationController
 
   private
 
-  def flash_success
-    flash[:success] = "#{@book.title} #{yield}"
+  def flash_success(message)
+    flash[:success] = "#{@book.title} message"
   end
 
-  def flash_alert
-    flash[:alert] = "#{@book.title} #{yield}"
+  def flash_alert(message)
+    flash[:alert] = "#{@book.title} message"
   end
 
   def flash_does_not_exist
