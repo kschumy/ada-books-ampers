@@ -1,4 +1,7 @@
 class BooksController < ApplicationController
+  before_action :find_book, only:[:show, :edit, :update, :destroy]
+  before_action :find_user
+
 
   def index
     @user = User.find_by(id: session[:user_id])
@@ -14,8 +17,8 @@ class BooksController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    @book = Book.find(id)
+    # id = params[:id]
+    # @book = Book.find(id)
   end
 
   def new
@@ -48,11 +51,11 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find_by(id: params[:id])
+    # @book = Book.find_by(id: params[:id])
   end
 
   def update
-    @book = Book.find_by(id: params[:id])
+    # @book = Book.find_by(id: params[:id])
     if !@book
       flash_does_not_exist   # flash[:alert] = "Book not found"
       redirect_to books_path
@@ -66,20 +69,31 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    id = params[:id]
-    begin
-      @book = Book.find(id)
-      if @book
-        @book.destroy
-      end
+    if @book
+      @book.destroy
       flash_success("deleted") # flash[:success] = "#{@book.title} deleted"
-    rescue
+    else
       flash_does_not_exist # flash[:alert] = "Book does not exist"
     end
     redirect_to books_path
+    # id = params[:id]
+    # begin
+    #   @book = Book.find(id)
+    #   if @book
+    #     @book.destroy
+    #   end
+    #   flash_success("deleted") # flash[:success] = "#{@book.title} deleted"
+    # rescue
+    #   flash_does_not_exist # flash[:alert] = "Book does not exist"
+    # end
+    # redirect_to books_path
   end
 
   private
+
+  def find_book
+    @book = Book.find_by(id: params[:id])
+  end
 
   def flash_success(message)
     flash[:success] = "#{@book.title} message"
@@ -90,7 +104,8 @@ class BooksController < ApplicationController
   end
 
   def flash_does_not_exist
-    flash[:alert] = "Book does not exist"
+    # flash[:alert] = "Book does not exist"
+    flash[:alert] = {book: "does not exist"}
   end
 
   def book_params

@@ -1,20 +1,21 @@
 class AuthorsController < ApplicationController
+  before_action :find_author, only:[:show, :edit, :update, :destroy]
+
   def index
     @authors = Author.all
   end
 
   def show
-    @author = Author.find_by(id: params[:id])
+    # @author = Author.find_by(id: params[:id])
   end
 
   def edit
-    @author = Author.find_by(id: params[:id])
   end
 
   def update
-    author = Author.find_by(id: params[:id])
-    author.update(author_params)
-    flash[:success] = "#{author.name} updated"
+    # author = Author.find_by(id: params[:id])
+    @author.update(author_params)
+    flash[:success] = "#{@author.name} updated"
     redirect_to author_path(params[:id])
   end
 
@@ -35,7 +36,7 @@ class AuthorsController < ApplicationController
   end
 
   def destroy
-    @author = Author.find_by(id: params[:id])
+    # @author = Author.find_by(id: params[:id])
     if @author
       @author.books.each do |book|
         book.destroy
