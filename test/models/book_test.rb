@@ -17,11 +17,14 @@ describe Book do
 
  describe "first published" do
    it "should return the earliest published book for the author with multiple books" do
-     book.author = Author.create name: "Kari B"
-     value(book).must_be :valid?
+     # book = books(:poodr)
+     # book.author = Author.create name: "Kari B"
+     # value(book).must_be :valid?
    end
 
    it "must have as title" do
+     book = books(:poodr)
+
      book.author = Author.create name: "Kari B"
      book.title = nil
      book.valid?.must_equal false # must have a title
@@ -29,6 +32,8 @@ describe Book do
    end
 
    it "must have title between 1 and 25 characters" do
+     book = books(:poodr)
+
      book.author = Author.create name: "Kari B"
      book.title = ""
      book.valid?.must_equal false
@@ -40,6 +45,8 @@ describe Book do
    end
 
    it "must have an author" do
+     book = books(:poodr)
+
      author = Author.create name: "Kari B"
 
      book.author = author
@@ -47,6 +54,8 @@ describe Book do
    end
 
    it "must have a genre field" do
+     book = books(:poodr)
+
      book.genres.must_equal []
      book.genres << Genre.create(name: "Sci Fi")
 
