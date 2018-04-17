@@ -28,7 +28,7 @@
               Welcome <%= @user.name %>
               <%= link_to "Logout", logout_path, method: :delete %>
             <% else %>
-              <%= link_to "Login", login_path %>
+              <%= link_to "Login With Guthub", github_login_path %>
           <% end %>
         </ul>
       </nav>
